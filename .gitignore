@@ -1,0 +1,20 @@
+# Only the small input files listed in data/README.md are versioned under data/.
+# Cohort mass spectrometry inputs come from PRIDE (PXD074778); clinical metadata are not shared.
+data/metadata/*
+!data/metadata/sample_metadata_TEMPLATE.txt
+data/proteomics/
+data/lipidomics/
+data/techrep/lipidomics/C18_pos/
+data/techrep/lipidomics/C18_neg/
+data/techrep/lipidomics/processed/
+outputs/
+
+# R / RStudio
+.Rhistory
+.RData
+.Rproj.user/
+
+# OS / Office lock files
+.DS_Store
+Thumbs.db
+~$*

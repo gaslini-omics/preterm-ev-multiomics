@@ -1,0 +1,31 @@
+Sample_ID	Condition
+MagNet_lipidi_C18_POS_BAMM_10uL_C1_71	Mag-Net BAMM 10uL
+MagNet_lipidi_C18_POS_BAMM_10uL_C2_72	Mag-Net BAMM 10uL
+MagNet_lipidi_C18_POS_BAMM_10uL_C3_73	Mag-Net BAMM 10uL
+MagNet_lipidi_C18_POS_BAMM_10uL_C4_74	Mag-Net BAMM 10uL
+MagNet_lipidi_C18_POS_BAMM_5uL_C1_67	Mag-Net BAMM 5uL
+MagNet_lipidi_C18_POS_BAMM_5uL_C2_68	Mag-Net BAMM 5uL
+MagNet_lipidi_C18_POS_BAMM_5uL_C3_69	Mag-Net BAMM 5uL
+MagNet_lipidi_C18_POS_BAMM_5uL_C4_70	Mag-Net BAMM 5uL
+MagNet_lipidi_C18_POS_IPA_10uL_C1_80	Mag-Net IPA 10uL
+MagNet_lipidi_C18_POS_IPA_10uL_C2_81	Mag-Net IPA 10uL
+MagNet_lipidi_C18_POS_IPA_10uL_C3_82	Mag-Net IPA 10uL
+MagNet_lipidi_C18_POS_IPA_10uL_C4_83	Mag-Net IPA 10uL
+MagNet_lipidi_C18_POS_IPA_5uL_C1_75	Mag-Net IPA 5uL
+MagNet_lipidi_C18_POS_IPA_5uL_C2_76	Mag-Net IPA 5uL
+MagNet_lipidi_C18_POS_IPA_5uL_C3_77	Mag-Net IPA 5uL
+MagNet_lipidi_C18_POS_IPA_5uL_C4_78	Mag-Net IPA 5uL
+MagNet_lipidi_C18_POS_MeOH_10uL_C1_88	Mag-Net MeOH 10uL
+MagNet_lipidi_C18_POS_MeOH_10uL_C2_89	Mag-Net MeOH 10uL
+MagNet_lipidi_C18_POS_MeOH_10uL_C3_90	Mag-Net MeOH 10uL
+MagNet_lipidi_C18_POS_MeOH_10uL_C4_91	Mag-Net MeOH 10uL
+MagNet_lipidi_C18_POS_MeOH_5uL_C1_84	Mag-Net MeOH 5uL
+MagNet_lipidi_C18_POS_MeOH_5uL_C2_85	Mag-Net MeOH 5uL
+MagNet_lipidi_C18_POS_MeOH_5uL_C3_86	Mag-Net MeOH 5uL
+MagNet_lipidi_C18_POS_MeOH_5uL_C4_87	Mag-Net MeOH 5uL
+MagNet_lipidi_C18_POS_QC1_27	QC
+MagNet_lipidi_C18_POS_QC2_40	QC
+MagNet_lipidi_C18_POS_QC3_53	QC
+MagNet_lipidi_C18_POS_QC4_66	QC
+MagNet_lipidi_C18_POS_QC5_79	QC
+MagNet_lipidi_C18_POS_BLK_92	BLK
