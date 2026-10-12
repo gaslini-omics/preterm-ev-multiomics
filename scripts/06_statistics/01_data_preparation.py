@@ -1,5 +1,5 @@
 # Authors: Gianvittorio Luria
-# License: BSD (3-clause)
+# License: MIT (see LICENSE)
 #
 # Aim:
 #   For each leading-edge feature of the significant module-outcome associations,

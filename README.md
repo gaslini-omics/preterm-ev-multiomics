@@ -197,4 +197,4 @@ If you use this code, please cite:
 
 ## License
 
-Code released under the MIT License (see `LICENSE`), except the scripts in `scripts/06_statistics/` (Gianvittorio Luria), released under the BSD 3-Clause License.
+Code released under the MIT License (see `LICENSE`).

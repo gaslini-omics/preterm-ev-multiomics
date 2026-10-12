@@ -1,5 +1,5 @@
 # Authors: Gianvittorio Luria
-# License: BSD (3-clause)
+# License: MIT (see LICENSE)
 #
 # Aim:
 #   Two-sided Mann-Whitney U test between outcome-negative and outcome-positive
