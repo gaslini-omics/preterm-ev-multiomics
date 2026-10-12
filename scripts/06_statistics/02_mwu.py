@@ -1,35 +1,44 @@
-# Authors: Gianvittorio Luria 
+# Authors: Gianvittorio Luria
 # License: BSD (3-clause)
+#
+# Aim:
+#   Two-sided Mann-Whitney U test between outcome-negative and outcome-positive
+#   samples, for each leading-edge feature and timepoint (Supplementary Table S8),
+#   with one boxplot per feature and outcome.
+#
+# Inputs:
+#   - outputs/tables/preterm/statistics/input/drivers_summary.tsv
+#   - outputs/tables/preterm/statistics/csv/all_data.csv (from 01_data_preparation.py)
+#
+# Outputs:
+#   - outputs/tables/preterm/statistics/csv/db_mwu.csv   U, nominal p-value and CLES
+#     (CLES < 0.5: higher abundance in the outcome-positive group)
+#   - outputs/figures/statistics_mwu/{png,html}/          boxplots
 
 import os
-import socket
-import tomli
 import pandas as pd
 import os.path as op
 import plotly.express as px
 import pingouin as pg
 
-with open(op.join(os.getcwd(), "config.toml"), "rb") as f:
-    config = tomli.load(f)
-    
-USER = config['user'][socket.gethostname()]
-
-raw_data_folder = config['folders'][USER]['raw_data_folder']
+# Paths are relative to the project root (two levels above this script)
+ROOT = op.abspath(op.join(op.dirname(__file__), '..', '..'))
+raw_data_folder = op.join(ROOT, 'outputs', 'tables', 'preterm', 'statistics', 'input')
 print(f'Data will be loaded from {raw_data_folder}')
-results_folder = config['folders'][USER]['results_folder']
+results_folder = op.join(ROOT, 'outputs', 'tables', 'preterm', 'statistics')
 print(f'Results will be saved in {results_folder}')
+plots_folder = op.join(ROOT, 'outputs', 'figures', 'statistics_mwu')
+print(f'Plots will be saved in {plots_folder}')
 
 # Load files
 db_drivers = pd.read_csv(op.join(raw_data_folder, 'drivers_summary.tsv'), sep='\t')
 db_all = pd.read_csv(op.join(results_folder, 'csv', 'all_data.csv'), sep=';')
 
 # Create save subdirectories
-if not os.path.exists(op.join(results_folder, 'plots')):
-    os.makedirs(op.join(results_folder, 'plots'))
-if not os.path.exists(op.join(results_folder, 'plots', 'png')):
-    os.makedirs(op.join(results_folder, 'plots', 'png'))
-if not os.path.exists(op.join(results_folder, 'plots', 'html')):
-    os.makedirs(op.join(results_folder, 'plots', 'html'))
+if not os.path.exists(op.join(plots_folder, 'png')):
+    os.makedirs(op.join(plots_folder, 'png'))
+if not os.path.exists(op.join(plots_folder, 'html')):
+    os.makedirs(op.join(plots_folder, 'html'))
 
 db_list = list()
 for index, row in db_drivers.iterrows():
@@ -56,7 +65,8 @@ for index, row in db_drivers.iterrows():
 		_feature_name_list.append(_feature_name)
 		_no = db_aux[(db_aux.timepoint==_t)&(db_aux.disease=='No')]['value'].to_numpy()
 		_yes = db_aux[(db_aux.timepoint==_t)&(db_aux.disease=='Yes')]['value'].to_numpy()
-		result_mwu = pg.mwu(_no,_yes).iloc[0]  
+		# pingouin >= 0.7 renamed 'U-val'/'p-val' to 'U_val'/'p_val'
+		result_mwu = pg.mwu(_no,_yes).rename(columns={'U_val':'U-val', 'p_val':'p-val'}).iloc[0]
 		_ann_dict_mwu[_t] = result_mwu['p-val']
 		_stat_list.append(result_mwu['U-val'])
 		_pval_list.append(result_mwu['p-val'])
@@ -69,6 +79,7 @@ for index, row in db_drivers.iterrows():
 	
 	# Plot
 	_savefig = True
+	_showfig = False # True opens each plot in the browser
 	_savename= f"BOXPLOT_{_feature_name.replace(' ', '_').replace(':','_').replace(';','_').replace('/','_')}_{_disease_name}"
 	_annotation = _ann_dict_mwu#None
 
@@ -111,11 +122,12 @@ for index, row in db_drivers.iterrows():
 	## save
 	if _savefig:
 		# PNG
-		fig.write_image(op.join(results_folder, 'plots', 'png', f"{_savename}.png"),
+		fig.write_image(op.join(plots_folder, 'png', f"{_savename}.png"),
 						scale=3)
 		# HTML
-		fig.write_html(op.join(results_folder, 'plots', 'html', f"{_savename}.html"))
-		## show
+		fig.write_html(op.join(plots_folder, 'html', f"{_savename}.html"))
+	## show
+	if _showfig:
 		fig.show()
 
 # Create statistical test results DataFrame

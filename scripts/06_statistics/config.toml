@@ -1,5 +1,0 @@
-[user]
-swarm = 'gv'
-[folders]
-gv.raw_data_folder = '/media/gv/TOSHIBA EXT/PEVMO/raw_data/'
-gv.results_folder = '/media/gv/TOSHIBA EXT/PEVMO/RESULTS/'

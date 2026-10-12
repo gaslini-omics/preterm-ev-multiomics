@@ -3,12 +3,12 @@
 ![Study overview](assets/study_overview.png)
 <sub>Created with BioRender.com</sub>
 
-R code accompanying:
+Code accompanying:
 
 > Grinovero N., Antonini F., *et al.* **Small volumes, deep insights: longitudinal plasma EV multi-omics in very preterm infants.** *medRxiv* (2026). https://doi.org/10.64898/2026.02.04.26345553  
 > A revised version is currently under peer review.
 
-The scripts cover the omics analyses: technical validation of the micro-volume Mag-Net workflow, the longitudinal proteomic and lipidomic analyses (preprocessing, linear mixed-effects models, clustering, enrichment), cross-omics network integration, module–outcome association testing (CAMERA), and the corresponding main and supplementary figures.
+The scripts cover the omics analyses: technical validation of the micro-volume Mag-Net workflow, the longitudinal proteomic and lipidomic analyses (preprocessing, linear mixed-effects models, clustering, enrichment), cross-omics network integration, module–outcome association testing (CAMERA), per-timepoint comparisons of the leading-edge features between outcome groups, and the corresponding main and supplementary figures. All analyses are in R, except the per-timepoint comparisons (Python).
 
 ## Method
 
@@ -25,12 +25,13 @@ scripts/
 ├── 02_proteomics/             cohort: cleaning, normalization, imputation, LMM, clustering, enrichment
 ├── 03_lipidomics/             cohort: cleaning, normalization, imputation, LMM, clustering
 ├── 04_integration/            protein–lipid network, module annotation, module–outcome CAMERA
-└── 05_figures/                one script per figure (Fig. 1, 3–7; Fig. S1, S2, S6–S8)
+├── 05_figures/                one script per figure (Fig. 1, 3–7; Fig. S1, S2, S6–S8)
+└── 06_statistics/             per-timepoint Mann-Whitney comparisons of the leading-edge features (Python)
 data/                          technical-validation proteomics, annotation and reference files (other inputs: see Input files)
 assets/                        image used in this README
 ```
 
-All paths are resolved with [`here`](https://here.r-lib.org/) relative to the project root (`preterm-ev-multiomics.Rproj`). Scripts are run one at a time from the project root, in the order below.
+R scripts resolve all paths with [`here`](https://here.r-lib.org/) relative to the project root (`preterm-ev-multiomics.Rproj`); Python scripts resolve them relative to their own location. Scripts are run one at a time from the project root, in the order below.
 
 ## Data availability
 
@@ -115,6 +116,9 @@ Paths are relative to the project root; `outputs/` is created by the scripts. So
 | Integration | `04_integration/01_integrate_prot_lip_network.R` | correlation network, Louvain modules |
 | | `04_integration/02_integrate_module_interpretation_GOBP.R` | module GO BP enrichment |
 | | `04_integration/03_modules_camera_all_outcomes_multiomics.R` | module–outcome CAMERA tests (default and estimated inter-feature correlation), group sizes, leading-edge features |
+| | `04_integration/04_export_statistics_inputs.R` | leading-edge features of the significant associations (FDR_global < 0.05), their abundances and the clinical outcomes, in `outputs/tables/preterm/statistics/input/` |
+| Per-timepoint comparisons (Python) | `06_statistics/01_data_preparation.py` | `outputs/tables/preterm/statistics/csv/all_data.csv` |
+| | `06_statistics/02_mwu.py` | Mann-Whitney U tests (`outputs/tables/preterm/statistics/csv/db_mwu.csv`), boxplots in `outputs/figures/statistics_mwu/` |
 
 ### 3. Figures (`scripts/05_figures/`)
 
@@ -149,7 +153,7 @@ EV characterization (NTA, TEM, imaging flow cytometry, western blot; Fig. 2 and 
 | S5 | `04_integration/03_modules_camera_all_outcomes_multiomics.R` (`modules_camera_all_outcomes_multiomics.tsv`) |
 | S6 | same script (`drivers_top2_<layer>_<outcome>.tsv`) |
 | S7 | same script (`effects_<layer>_<outcome>.tsv`) |
-| S8 | per-timepoint Mann-Whitney comparisons, not included in this repository |
+| S8 | `06_statistics/02_mwu.py` (`db_mwu.csv`) |
 
 ## Steps performed outside R
 
@@ -175,6 +179,14 @@ BiocManager::install(c(
 remotes::install_github("BioinfOMICS/LipidSigR")
 ```
 
+The per-timepoint comparisons (`scripts/06_statistics/`) need Python ≥ 3.10 and the packages listed in `scripts/06_statistics/requirements.txt`:
+
+```
+pip install -r scripts/06_statistics/requirements.txt
+```
+
+PNG export of the boxplots uses Kaleido, which needs a Chrome installation; if none is found, `plotly_get_chrome` installs one.
+
 Random seeds are set in the scripts that use stochastic steps (imputation, clustering, layout).
 
 ## Citation
@@ -185,4 +197,4 @@ If you use this code, please cite:
 
 ## License
 
-Code released under the MIT License (see `LICENSE`).
+Code released under the MIT License (see `LICENSE`), except the scripts in `scripts/06_statistics/` (Gianvittorio Luria), released under the BSD 3-Clause License.
